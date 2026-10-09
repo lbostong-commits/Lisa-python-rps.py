@@ -59,23 +59,30 @@ def validate_input(player):
 
 
 def beat(move):
-    # move is a string: "rock", "paper", or "scissors"
-    # Return the move that beats `move`.
-    # For example, beat("rock") should return "paper".
-    # your code here (make sure to remove `pass` when you write your code)
-    pass
+  if move == ("rock"):
+    return "paper"
+  elif move == ("paper"):
+    return "scissors"
+  elif move == ("scissors"):
+    return "rock"
 
 
 # ---------- score one round: YOU WRITE THIS ----------
 
 
 def score(player, computer):
-    # player is a string: "rock", "paper", or "scissors"
-    # computer is a string: "rock", "paper", or "scissors"
-    # Return 1 if the player wins, -1 if the player loses, 0 for a tie.
-    # Hint: use winner(player, computer).
-    # your code here (make sure to remove `pass` when you write your code)
-    pass
+ player_wins = 0
+ computer_wins = 0
+
+ if player == computer:
+  return 0
+
+ elif (player == "rock" and computer == "scissors"
+    or player == "paper" and computer == "rock"
+    or player == "scissor" and computer == "rock" ):
+   return 1
+ else:
+   return -1
 
 
 # ---------- strategies ----------
@@ -121,30 +128,42 @@ def by_round(round_number, last_computer_move):
 
 
 def beat_last(round_number, last_computer_move):
-    # round_number is an integer: 1, 2, 3, ... (the current round)
-    # last_computer_move is a string: "rock", "paper", or "scissors" (the computer's move in the previous round)
-    # Play the move that beats the computer's last move.
-    # In round 1 there is no last move (it is None), so play "rock".
-    # your code here (make sure to remove `pass` when you write your code)
-    pass
+ if round_number == 1 or last_computer_move is None:
+   return "rock"
+
+   if round_number == 2 or last_computer_move == "rock":
+     return "paper"
+   elif round_number == 3 or last_computer_move == "paper":
+     return "scissors"
+   elif round_number == 4 or last_computer_move == "scissors"
+     return "rock"
 
 
 # --- YOU WRITE THIS strategy ---
 
 
 def expect_change(round_number, last_computer_move):
-    # Assume the computer will NOT repeat its last move, so it will play one
-    # of the other two moves. You cannot cover both, so choose randomly
-    # between the two moves that beat those two options.
-    # Example: if the computer last played "rock", it will probably play
-    # "paper" or "scissors" next. "scissors" beats paper and "rock" beats
-    # scissors, so return "scissors" or "rock", chosen at random.
-    # In round 1 last_computer_move is None, so return any random move
-    # (you can use random_move()).
-    # Hint: branch on last_computer_move and use random.randint(1, 2) to
-    # choose between the two moves, the same randint pattern by_round uses.
-    # your code here (make sure to remove `pass` when you write your code)
-    pass
+    
+  if last_computer_move is None:
+   return random_move()
+
+  if last_computer_move == "rock":
+    if random.randint(1, 2) == 1:
+      return "scissors"
+  else:
+      return "paper"
+
+  if last_computer_move == "paper":
+    if random.randint(1, 2) == 1:
+     return "rock"
+  else:
+     return "scissors"
+
+  if last_computer_move == "scissors":
+    if random.randint(1, 2) == 1:
+     return "paper"
+    else:
+      return "rock"
 
 
 # ---------- the tournament: YOU WRITE THIS ----------
@@ -152,12 +171,40 @@ def expect_change(round_number, last_computer_move):
 # total score. Each side sees the other's move from the previous round, so
 # start both "last move" variables at None and update them each round.
 
+def always_rock(prev_opponent_move):
+  return "rock"
+
+def copycat_strategy(prev_opponent_move):
+  if prev_opponent_move is None:
+    return random.choice(["rock","paper","scissors"])
+  return prev_opponent_move
+
 
 def play_rounds(strategy, opponent, num_rounds):
-    # your code here
-    pass
+  stra_score = 0 
+  prev_strategy_move = None 
+  prev_opponent_move = None
 
+  for _ in range(num_rounds):
 
+    move1 = strategy(prev_opponent_move)
+    move2 = opponent(prev_strategy_move)
+
+    prev_strategy_move = move1 
+    prev_opponent_move = move2
+
+    if move1 == move2:
+       stra_score += 1 
+    elif (move1 == "rock" and move2 == "scissors") or\
+          (move1 == "paper" and move2 == "rock") or\
+          (move1 == "scissors" and move2 == "paper"):
+
+          stra_score += 3
+
+  return stra_score
+
+  total_score = play_rounds(copycat_strategy, always_rock, nums_round=10)
+  print(f"Total strategy score after 10 rounds: {total_score}")
 # ---------- the analysis ----------
 # Once your functions are written, run this file to see the tournament.
 # It prints the average score per round for each strategy against three
