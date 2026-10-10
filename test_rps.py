@@ -27,7 +27,7 @@ def score(player, computer):
    return -1
 
 
-def beat_last(round_number, last_computer_move)
+def beat_last(round_number, last_computer_move):
  if round_number == 1 or last_computer_move is None:
    return "rock"
 
@@ -35,7 +35,7 @@ def beat_last(round_number, last_computer_move)
      return "paper"
    elif round_number == 3 or last_computer_move == "paper":
      return "scissors"
-   elif round_number == 4 or last_computer_move == "scissors"
+   elif round_number == 4 or last_computer_move == "scissors":
      return "rock"
 
 
