@@ -135,7 +135,7 @@ def beat_last(round_number, last_computer_move):
      return "paper"
    elif round_number == 3 or last_computer_move == "paper":
      return "scissors"
-   elif round_number == 4 or last_computer_move == "scissors"
+   elif round_number == 4 or last_computer_move == "scissors":
      return "rock"
 
 
@@ -170,15 +170,48 @@ def expect_change(round_number, last_computer_move):
 # Play one strategy against one opponent for `num_rounds` rounds and return the
 # total score. Each side sees the other's move from the previous round, so
 # start both "last move" variables at None and update them each round.
+import random
+BEATS = {"rock": "paper", "paper": "scissors", "scissors":"rock"}
 
 def always_rock(prev_opponent_move):
   return "rock"
 
+def play_random(prev_opponent_move):
+    return random.choice(["rock","paper","scissors"])
+    
 def copycat_strategy(prev_opponent_move):
   if prev_opponent_move is None:
     return random.choice(["rock","paper","scissors"])
   return prev_opponent_move
 
+def beat_last(prev_opponent_move):
+  if prev_opponent_move is None:
+    return random.choice(["rock", "paper", "scissors"])
+  return BEATS[prev_opponent_move]
+
+def expect_change(prev_opponent_move):
+  if prev_opponent_move is None:
+    return random.choice (["rock", "paper", "scissors"])
+      
+  options = ["rock", "paper", "scissors"]
+  options.remove(prev_opponent_move)
+  predicted_next = random.choice(options)
+  return BEATS[predicted_next]
+
+def cycle(prev_opponent_move):
+  if prev_opponent_move is None:
+    cycle.index = 0
+  moves = ["rock", "scissors", "paper"]
+  move = moves[cycle.index % 3]
+  cycle.index += 1
+  return move
+
+def by_round(prev_opponent_move):
+  if prev_opponent_move is None:
+    by_round.round_num = 0
+  by_round.round_num += 1
+  moves = ["rock", "paper", "scissors"]
+  return moves[by_round.round_num % 3]
 
 def play_rounds(strategy, opponent, num_rounds):
   stra_score = 0 
