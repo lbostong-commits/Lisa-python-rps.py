@@ -3,7 +3,7 @@
 ## Explain your code
 
 In a few sentences each, explain how your function works.
-
+[Lisa.Boston.G_Explain your code-1.pdf](https://github.com/user-attachments/files/33271916/Lisa.Boston.G_Explain.your.code-1.pdf)
 - `beat`:
 - `score`:
 - `beat_last`:
