@@ -237,7 +237,7 @@ def play_rounds(strategy, opponent, num_rounds):
   return stra_score
 
   total_score = play_rounds(copycat_strategy, always_rock, nums_round=10)
-  print(f"Total strategy score after 10 rounds: {total_score}")
+  print("Total strategy score after 10 rounds:",total_score)
 # ---------- the analysis ----------
 # Once your functions are written, run this file to see the tournament.
 # It prints the average score per round for each strategy against three
